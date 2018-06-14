@@ -84,7 +84,7 @@ class TopFilmsCell: BaseCell {
         return iv
     }()
 
-   private let favoriteButton: UIButton = {
+   lazy var favoriteButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 10, y: 10, width: 40, height: 40))
         button.titleLabel?.font = UIFont.systemFont(ofSize: 26, weight: .bold)
         button.setTitle("☆", for: .normal)

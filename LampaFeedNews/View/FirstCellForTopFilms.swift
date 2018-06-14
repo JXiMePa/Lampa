@@ -69,7 +69,7 @@ final class FirstCellForTopFilms: UICollectionViewCell  {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+  
     private func setupTopFilmsViews() {
         
         addSubview(collectionView)
@@ -98,7 +98,7 @@ extension FirstCellForTopFilms : UICollectionViewDelegate, UICollectionViewDataS
         let cell = collectionView.dequeueReusableCell( withReuseIdentifier: topFilmsCellId, for: indexPath) as! TopFilmsCell
         
         cell.topFilm = onlyTopFilms[indexPath.item]
-        
+
         return cell
     }
     

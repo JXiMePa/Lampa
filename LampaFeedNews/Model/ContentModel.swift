@@ -17,5 +17,5 @@ struct Film {
     var language: String?
     var overview: String?
     var release: String?
-    var favorit = false
+    var isFavorite = false
 }

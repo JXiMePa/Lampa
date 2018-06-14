@@ -19,8 +19,7 @@ final class HomeController: UICollectionViewController  {
     
     private let filmCellId = "newsCellId"
     private let topFilmCellId = "topNewsCellId"
-    
-    
+ 
     private lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
         sb.delegate = self
@@ -89,7 +88,7 @@ final class HomeController: UICollectionViewController  {
         return searchBar.text?.isEmpty ?? true
     }
     
-    private func filterContextForSearchText(_ searchText: String, scope: String = "All") {
+    private func filterContextForSearchText(_ searchText: String) {
 
             searchResultFilms = filmsData.filter { $0.title != nil }.filter { $0.title!.capitalized.contains(searchText.capitalized) }
         
@@ -102,15 +101,15 @@ final class HomeController: UICollectionViewController  {
     private func fetchRequest() {
         
         ApiService.sharedInstance.fetchRequest(urlString: urlString) { [weak self] (data, error) in
-            
-            self?.spiner.stopAnimating()
-            
+
             guard error == nil else {
                 self?.alert(message: "Please check your internet connection and try again.", title: "Error 😓")
                 return
             }
+            
             guard let data = data else { return }
             self?.filmsData = data
+            self?.spiner.stopAnimating()
             self?.collectionView?.reloadData()
         }
     }
@@ -142,21 +141,21 @@ final class HomeController: UICollectionViewController  {
     }
     
     @objc private func handleMore() {
-        print("handleMore()")
+       // moreButton Action.
     }
     
     private func setupMenuBar() {
         
         navigationController?.hidesBarsOnSwipe = true
         
-        let beckView = UIView()
-        beckView.backgroundColor = #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1)
+        let backView = UIView()
+        backView.backgroundColor = #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1)
         
-        view.addSubview(beckView)
+        view.addSubview(backView)
         view.addSubview(menuBar)
         view.addSubview(spiner)
         
-        _ = beckView.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: topBarHight)
+        _ = backView.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: topBarHight)
         
         _ = menuBar.anchor(view.safeAreaLayoutGuide.topAnchor , left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: topBarHight)
         
@@ -210,7 +209,7 @@ extension HomeController: UICollectionViewDelegateFlowLayout {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! FirstCellForTopFilms
             
             cell.films = filmsData
-            
+
             return cell
             
         } else {
